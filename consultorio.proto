@@ -1,0 +1,7 @@
+syntax = "proto3";
+package consultorio;
+service Consultorio {
+  rpc Consulta (ConsultaReq) returns (ConsultaRep);
+}
+message ConsultaReq {float id_pac=1; string desc = 2; }
+message ConsultaRep {float id_med = 1; }
