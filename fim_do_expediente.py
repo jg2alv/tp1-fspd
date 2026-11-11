@@ -5,7 +5,7 @@
 @description: cliente que aciona o termino do ambulatorio
 @author: Augusto Guerra 
          João Vaz
-@lastupdate: 2026 10 24
+@lastupdate: 2026 11 11
 """
 import sys
 sys.stdout.reconfigure(line_buffering=True)
