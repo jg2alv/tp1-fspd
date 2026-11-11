@@ -6,12 +6,13 @@
              e o médico por meio de prontuários.
 @author: Augusto Guerra
          João Vaz
-@lastupdate: 2026 10 24
+@lastupdate: 2026 11 11
 """
 import sys
 sys.stdout.reconfigure(line_buffering=True)
 import threading
 from concurrent import futures
+from urllib.parse import unquote
 import grpc
 import ambulatorio_pb2 as pb
 import ambulatorio_pb2_grpc as pbg
@@ -22,6 +23,8 @@ TIMED = 0.1
 def split_peer(s):
     if s.startswith(("ipv4:", "ipv6:")): s = s.split(":", 1)[1]
     a, _, p = s.rpartition(":")
+    # gRPC pode codificar os colchetes do endereço IPv6 como %5B e %5D.
+    a = unquote(a)
     return (a[1:-1] if a[:1] == "[" and a[-1:] == "]" else a), int(p)
 
 class Prontuario:
