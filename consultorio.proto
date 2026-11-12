@@ -1,7 +1,12 @@
+// Interface do servidor do consultório (executado pelo processo do médico).
 syntax = "proto3";
 package consultorio;
+
 service Consultorio {
+  // Chamado pelo paciente com seu identificador e a descrição do problema;
+  // retorna, ao final da consulta, o identificador do médico.
   rpc Consulta (ConsultaReq) returns (ConsultaRep);
 }
-message ConsultaReq {float id_pac=1; string desc = 2; }
-message ConsultaRep {float id_med = 1; }
+
+message ConsultaReq { float id_pac = 1; string desc = 2; }
+message ConsultaRep { float id_med = 1; }

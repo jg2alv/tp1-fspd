@@ -1,16 +1,26 @@
+// Interface do servidor do ambulatório.
+// Tipos do enunciado: tipo_ident -> float, tipo_porto -> int32,
+// tipo_ender -> string.
 syntax = "proto3";
 package ambulatorio;
+
 service Ambulatorio {
+  // Chamado pelo paciente: devolve onde fica o consultório do médico
+  // (identificador zero, endereço vazio e porto zero se não houver médico).
   rpc ProcuraMedico  (ProcuraMedicoReq)  returns (ProcuraMedicoRep);
+  // Chamado pelo médico ao começar: 0 se registrado, -1 caso contrário.
   rpc RegistraMedico (RegistraMedicoReq) returns (RegistraMedicoRep);
+  // Chamado pelo médico: devolve o próximo paciente (zero no fim do expediente).
   rpc ChamaPaciente  (ChamaPacienteReq)  returns (ChamaPacienteRep);
+  // Fim do expediente: número de médicos liberados (ou de pacientes, negativo).
   rpc Termino        (TerminoReq)        returns (TerminoRep);
 }
-message ProcuraMedicoReq  {float id_pac=1;}
-message ProcuraMedicoRep  {string address =1; int32 port =2; }
-message RegistraMedicoReq { float id_med = 1;int32 port =2; }
-message RegistraMedicoRep { int32 res = 1;}
-message ChamaPacienteReq  {float id_med=1; }
+
+message ProcuraMedicoReq  { float id_pac = 1; }
+message ProcuraMedicoRep  { string address = 1; int32 port = 2; float id_med = 3; }
+message RegistraMedicoReq { float id_med = 1; int32 port = 2; }
+message RegistraMedicoRep { int32 res = 1; }
+message ChamaPacienteReq  { float id_med = 1; }
 message ChamaPacienteRep  { float id_pac = 1; }
 message TerminoReq        {}
-message TerminoRep        {int32 freed = 1; }
+message TerminoRep        { int32 freed = 1; }
